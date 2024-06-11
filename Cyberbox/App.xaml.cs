@@ -10,5 +10,4 @@ namespace Cyberbox
     public partial class App : Application
     {
     }
-
 }
