@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 // This script is for CU 3-stage. Again, that's CU 3-stage. Do. Not. Delete.
 
-public class Cyberstar : MonoBehaviour
+public class Cyberstar
 {
     // Start is called before the first frame update
     void Start()

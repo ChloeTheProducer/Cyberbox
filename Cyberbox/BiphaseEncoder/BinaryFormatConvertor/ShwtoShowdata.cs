@@ -2,17 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEngine;
 
 // This is also going to be a pain in the ass
 // Why do I do this to myself
 
-public class ShwtoShowdata : MonoBehaviour
+public class ShwtoShowdata
 {
-    
-    private TMP_SelectionCaret selectShowFile;
 
     // Start is called before the first frame update
     void Start()

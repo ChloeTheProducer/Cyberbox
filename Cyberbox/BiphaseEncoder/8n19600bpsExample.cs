@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
-using UnityEngine;
 
-public class SerialToWavEncoder : MonoBehaviour
+namespace SerialEncoder { }
+
+public class SerialToWavEncoder
 {
     // Encode a binary message into 8-N-1 format
     public static string EncodeToSerial(string message)
@@ -76,6 +77,5 @@ public class SerialToWavEncoder : MonoBehaviour
     {
         string encodedSignal = EncodeToSerial(message);
         CreateWavFile(filePath, encodedSignal);
-        Debug.Log($"WAV file '{filePath}' generated successfully.");
     }
 }

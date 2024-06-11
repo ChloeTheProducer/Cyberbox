@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 // Fucking HOW... I can't even find good reference images to model them, so how the hell am I supposed to find corporate documents or anything that'll tell me what/how they run
 // There is so little info anywhere about these guys that I'm actually surprised that there is video footage of them on youtube, and images of them PERIOD on google
@@ -9,7 +8,7 @@ using UnityEngine;
 // but major magics and the rock and roll rebellion, ABSOLUTELY. FUCKING. NOTHING.
 // Its like I want myself to go crazy... crazy? I was crazy once. They locked me in a room. A rubber room. A rubber room with rats, and rats make me crazy. Crazy? I was crazy once.
 
-public class RNRRebellion : MonoBehaviour
+public class RNRRebellion
 {
     // Start is called before the first frame update
     void Start()

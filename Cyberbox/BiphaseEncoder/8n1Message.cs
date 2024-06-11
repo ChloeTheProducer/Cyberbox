@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-using UnityEngine;
 
-public class ExampleUsage : MonoBehaviour
+public class ExampleUsage
 {
     public SerialToWavEncoder encoder;
     public string message = "Hello, World! Am I Alive?!?!??!?!";
