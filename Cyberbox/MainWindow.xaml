@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cyberbox"
         mc:Ignorable="d"
-        Title="Cyberbox" Height="720" Width="1024" Background="{x:Null}" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+        Title="Cyberbox" Height="960" Width="1280" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF1A1A1A">
     <Grid/>
 </Window>
