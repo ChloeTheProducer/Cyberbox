@@ -13,8 +13,5 @@
     <Grid>
         <Button x:Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="1134,876,0,0" VerticalAlignment="Top" Height="52" Width="111" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit" Click="Quit_Click">
         </Button>
-        <ComboBox HorizontalAlignment="Left" Margin="250,550,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True" SelectionChanged="ComboBox_SelectionChanged">
-            <syncfusion:TitleButton ContentStringFormat="sample text"/>
-        </ComboBox>
     </Grid>
 </Window>

@@ -29,10 +29,5 @@ namespace Cyberbox
         {
             this.Close();
         }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
