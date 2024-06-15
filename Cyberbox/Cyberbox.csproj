@@ -9,8 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="decoder background.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Syncfusion.SfChart.WPF" Version="26.1.35" />
     <PackageReference Include="Syncfusion.SfGrid.WPF" Version="26.1.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="decoder background.png" />
   </ItemGroup>
 
 </Project>
