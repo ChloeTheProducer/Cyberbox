@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="26.1.35" />
+    <PackageReference Include="Syncfusion.SfGrid.WPF" Version="26.1.35" />
+  </ItemGroup>
+
 </Project>
