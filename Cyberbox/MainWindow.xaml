@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:Cyberbox"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Cyberbox.MainWindow"
         mc:Ignorable="d"
-        Title="Cyberbox" Height="960" Width="1280" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF1A1A1A">
+        Title="Cyberbox" Height="960" Width="1280" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush/>
+    </Window.Background>
     <Grid>
-        <Button Content="Quit" HorizontalAlignment="Left" Margin="1134,876,0,0" VerticalAlignment="Top" Height="52" Width="111" IsDefault="True"/>
+        <Button x:Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="1134,876,0,0" VerticalAlignment="Top" Height="52" Width="111" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit">
+        </Button>
     </Grid>
 </Window>
