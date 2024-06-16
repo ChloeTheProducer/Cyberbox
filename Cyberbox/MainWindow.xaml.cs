@@ -29,5 +29,21 @@ namespace Cyberbox
         {
             this.Close();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SoundPlayer player = new SoundPlayer(@"C:\Users\Chloe\Music\Polish cow (English Lyrics Full Version).wav");
+            player.Load();
+            player.Play();
+            
+
+            bool soundFinished = true;
+
+            if (soundFinished)
+            {
+                soundFinished = false;
+                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+            }
+        }
     }
 }
