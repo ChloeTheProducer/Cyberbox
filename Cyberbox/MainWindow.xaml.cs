@@ -33,11 +33,13 @@ namespace Cyberbox
             _isPlaying = false;
         }
 
+        // Quits the program ya idiot, what'd ya think it was gonna do delete system32
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        // This plays the music
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (_isPlaying)
@@ -54,18 +56,20 @@ namespace Cyberbox
                 _isPlaying = true;
                 UpdateSongInfo();
             }
+        }
 
-            void UpdateSongInfo()
+        // Updates the song info for the currently playing song... bruh
+        private void UpdateSongInfo()
+        {
+            if (_isPlaying)
             {
-                if (_isPlaying)
-                {
-                    songInfoTextBlock.Text = $"Now Playing: {_songName}";
-                }
-                else
-                {
-                    songInfoTextBlock.Text = "No Song Playing";
-                }
+                songInfoTextBlock.Text = $"Now Playing: {_songName}";
+            }
+            else
+            {
+                songInfoTextBlock.Text = "No Song Playing";
             }
         }
+
     }
 }
