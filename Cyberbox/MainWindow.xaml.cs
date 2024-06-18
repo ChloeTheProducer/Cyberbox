@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Media;
 using System.Text;
 using System.Windows;
@@ -20,9 +21,16 @@ namespace Cyberbox
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private SoundPlayer _player;
+        private bool _isPlaying;
+        private string _songName = "Cypis - Gdzie jest biały węgorz ? (Zejście)"; // Replace with your song info
+
         public MainWindow()
         {
             InitializeComponent();
+            _player = new SoundPlayer(@"C:\Users\Chloe\Music\Polish cow (English Lyrics Full Version).wav");
+            _isPlaying = false;
         }
 
         private void Quit_Click(object sender, RoutedEventArgs e)
@@ -32,17 +40,31 @@ namespace Cyberbox
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SoundPlayer player = new SoundPlayer(@"C:\Users\Chloe\Music\Polish cow (English Lyrics Full Version).wav");
-            player.Load();
-            player.Play();
-            
-
-            bool soundFinished = true;
-
-            if (soundFinished)
+            if (_isPlaying)
             {
-                soundFinished = false;
-                Task.Factory.StartNew(() => { player.PlaySync(); soundFinished = true; });
+                // Stop the music
+                _player.Stop();
+                _isPlaying = false;
+                UpdateSongInfo();
+            }
+            else
+            {
+                // Play and loop the music
+                _player.PlayLooping();
+                _isPlaying = true;
+                UpdateSongInfo();
+            }
+
+            void UpdateSongInfo()
+            {
+                if (_isPlaying)
+                {
+                    songInfoTextBlock.Text = $"Now Playing: {_songName}";
+                }
+                else
+                {
+                    songInfoTextBlock.Text = "No Song Playing";
+                }
             }
         }
     }
