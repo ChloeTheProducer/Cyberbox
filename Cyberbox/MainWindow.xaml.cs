@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Media;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,12 +26,12 @@ namespace Cyberbox
 
         private SoundPlayer _player;
         private bool _isPlaying;
-        private string _songName = "Cypis - Gdzie jest biały węgorz ? (Zejście)"; // Replace with your song info
+        private string _songName = "Macintosh Plus - 花の専門店 (Flower Specialty Store)"; // Replace with your song info
 
         public MainWindow()
         {
             InitializeComponent();
-            _player = new SoundPlayer(@"C:\Users\Chloe\Music\Polish cow (English Lyrics Full Version).wav");
+            _player = new SoundPlayer(@"C:\Users\Chloe\Music\Encoder\Vaporwave\Floral Shoppe\花の専門店.wav");
             _isPlaying = false;
         }
 
