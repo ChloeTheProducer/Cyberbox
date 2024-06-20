@@ -31,7 +31,7 @@ namespace Cyberbox
         public MainWindow()
         {
             InitializeComponent();
-            _player = new SoundPlayer(@"C:\Users\Chloe\Music\Encoder\Vaporwave\Floral Shoppe\花の専門店.wav");
+            _player = new SoundPlayer(@"C:\Users\Chloe\source\repos\Cyberbox\Cyberbox\花の専門店.wav");
             _isPlaying = false;
         }
 
