@@ -24,8 +24,9 @@ So for now You'll have to use wine, specifically lutris for a graphical front-en
 
 # Setting up Cyberbox with lutris:
 
-So you decided you don't/no longer wanna use windows. Congratulations on breaking free from the malware riddled shackles of microsoft and moving to the penguin valhalla
-To setup Cyberbox on linux with lutris first you will need to install wine and lutris, If you already have them installed you can move to the next section
+So you decided you don't/no longer wanna use windows. Congratulations on breaking free from the malware riddled shackles of microsoft and moving to the penguin valhalla.
+
+To setup Cyberbox on linux with lutris first you will need to install wine and lutris, If you already have them installed you can move to the next section.
 
 To install wine, open a terminal with either ctrl+alt+T, and type,
 
