@@ -27,14 +27,12 @@ namespace Cyberbox
 
         private SoundPlayer _player;
         private bool _isPlaying;
-        private string _tempFilePath;
         private string _songName = "Macintosh Plus - 花の専門店 (Flower Specialty Store)"; // Replace with your song info
 
         public MainWindow()
         {
             InitializeComponent();
-            _player = new SoundPlayer();
-            ExtractEmbeddedAudioResource();
+            _player = new SoundPlayer(@"C:\Users\Chloe\source\repos\Cyberbox\Cyberbox\花の専門店.wav");
             _isPlaying = false;
         }
 
@@ -42,31 +40,6 @@ namespace Cyberbox
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void ExtractEmbeddedAudioResource()
-        {
-            // Get the current assembly
-            var assembly = Assembly.GetExecutingAssembly();
-
-            // Define the resource path within the assembly
-            string resourceName = "WpfApp.Resources.花の専門店.wav"; // Adjust namespace and resource path
-
-            // Extract the embedded resource to a temporary file
-            _tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "C:\\Users\\Chloe\\source\\repos\\Cyberbox\\Cyberbox\\花の専門店.wav花の専門店.wav");
-
-            using (Stream resourceStream = assembly.GetManifestResourceStream(resourceName))
-            {
-                if (resourceStream == null)
-                {
-                    throw new FileNotFoundException("Resource not found", resourceName);
-                }
-
-                using (FileStream fileStream = new FileStream(_tempFilePath, FileMode.Create, FileAccess.Write))
-                {
-                    resourceStream.CopyTo(fileStream);
-                }
-            }
         }
 
         // This plays the music
@@ -82,7 +55,6 @@ namespace Cyberbox
             else
             {
                 // Play and loop the music
-                _player.SoundLocation = _tempFilePath;
                 _player.PlayLooping();
                 _isPlaying = true;
                 UpdateSongInfo();
