@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="decoder background.png" />
+    <None Remove="花の専門店.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <Resource Include="decoder background.png" />
+    <EmbeddedResource Include="花の専門店.wav" />
   </ItemGroup>
 
 </Project>
