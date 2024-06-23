@@ -32,7 +32,7 @@ namespace Cyberbox
         public MainWindow()
         {
             InitializeComponent();
-            _player = new SoundPlayer(@"C:\Users\Chloe\source\repos\Cyberbox\Cyberbox\花の専門店.wav");
+            _player = new SoundPlayer();
             _isPlaying = false;
         }
 
@@ -45,20 +45,10 @@ namespace Cyberbox
         // This plays the music
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_isPlaying)
-            {
-                // Stop the music
-                _player.Stop();
-                _isPlaying = false;
-                UpdateSongInfo();
-            }
-            else
-            {
-                // Play and loop the music
-                _player.PlayLooping();
-                _isPlaying = true;
-                UpdateSongInfo();
-            }
+
+            string songFileName = "花の専門店.wav";
+            PlayMusicInExecutableDirectory(songFileName);
+
         }
 
         // Updates the song info for the currently playing song... bruh
@@ -76,7 +66,38 @@ namespace Cyberbox
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
+        }
+
+        private void PlayMusicInExecutableDirectory(string fileName)
+        {
+            string execDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = System.IO.Path.Combine(execDirectory, fileName);
+
+            if (File.Exists(filePath))
+            {
+                _player = new SoundPlayer(filePath);
+                _player.Play();
+                if (_isPlaying)
+                {
+                    // Stop the music
+                    _player.Stop();
+                    _isPlaying = false;
+                    UpdateSongInfo();
+                }
+                else
+                {
+                    // Play and loop the music
+                    _player.PlayLooping();
+                    _isPlaying = true;
+                    UpdateSongInfo();
+
+                }
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("File not found: " + filePath, "Error", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Error);
+            }
         }
     }
 }
