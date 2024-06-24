@@ -30,5 +30,6 @@
         <StatusBar Margin="10,586,10,102"/>
         <ProgressBar HorizontalAlignment="Center" Height="28" Margin="0,532,0,0" VerticalAlignment="Top" Width="1260"/>
         <Button Content="Select Show File" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" FontSize="32" Width="260" Click="Button_Click_1"/>
+        <TextBlock x:Name="SplashTextBlock" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,99,0,0" TextWrapping="Wrap" Text="Splash Text Here" VerticalAlignment="Top" Height="162" Width="702"/>
     </Grid>
 </Window>
