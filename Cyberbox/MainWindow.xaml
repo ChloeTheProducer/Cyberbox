@@ -15,9 +15,9 @@
         </Button>
         <Button x:Name="BGM" Content="BGM" Margin="1002,878,167,32" FontSize="24" Click="Button_Click" ToolTip="Enables and disables BGM"/>
         <Rectangle HorizontalAlignment="Left" Height="35" Margin="27,905,0,0" VerticalAlignment="Top" Width="706" RadiusX="5.5" RadiusY="5.5" Stroke="Black" Fill="Black"/>
-        <TextBlock Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,26" Height="31" Width="777" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Cyberbox" VerticalAlignment="Top" Height="169" Width="422" FontSize="72"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1162,0,0,0" TextWrapping="Wrap" Text="V1.0" VerticalAlignment="Top" FontSize="48" Width="158"/>
+        <TextBlock x:Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,26" Height="31" Width="777" FontSize="24"/>
+        <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Cyberbox" VerticalAlignment="Top" Height="169" Width="422" FontSize="72"/>
+        <TextBlock x:Name="Version" HorizontalAlignment="Left" Margin="1162,0,0,0" TextWrapping="Wrap" Text="V1.0" VerticalAlignment="Top" FontSize="48" Width="158"/>
         <ComboBox HorizontalAlignment="Center" Margin="0,402,0,0" VerticalAlignment="Top" Width="260" Height="22" IsReadOnly="True" FontWeight="Bold" SelectionChanged="ComboBox_SelectionChanged">
             <ComboBoxItem Content="Rock afire Explosion" FontFamily="Segoe UI" FontWeight="Bold"/>
             <ComboBoxItem Content="PTT Cybers" FontWeight="Bold"/>
@@ -25,11 +25,11 @@
             <ComboBoxItem Content="CU 3-Stage" FontWeight="Bold"/>
             <ComboBoxItem Content="Rock and Roll Rebellion" FontWeight="Bold"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Center" Margin="0,348,0,0" TextWrapping="Wrap" Text="Select Encoding:" VerticalAlignment="Top" Height="49" Width="260" FontSize="36"/>
+        <TextBlock x:Name="Encoding" HorizontalAlignment="Center" Margin="0,348,0,0" TextWrapping="Wrap" Text="Select Encoding:" VerticalAlignment="Top" Height="49" Width="260" FontSize="36"/>
         <Button Content="Export" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="46" Width="200" Height="70"/>
         <StatusBar Margin="10,586,10,102"/>
         <ProgressBar HorizontalAlignment="Center" Height="28" Margin="0,532,0,0" VerticalAlignment="Top" Width="1260"/>
-        <Button Content="Select Show File" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" FontSize="32" Width="260" Click="Button_Click_1"/>
+        <Button x:Name="SelectFile" Content="Select Show File" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" FontSize="32" Width="260" Click="Button_Click_1"/>
         <TextBlock x:Name="SplashTextBlock" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,99,0,0" TextWrapping="Wrap" Text="Splash Text Here" VerticalAlignment="Top" Height="162" Width="702"/>
     </Grid>
 </Window>
