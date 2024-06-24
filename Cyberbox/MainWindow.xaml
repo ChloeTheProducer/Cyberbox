@@ -18,17 +18,17 @@
         <TextBlock Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,26" Height="31" Width="777" FontSize="24"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Cyberbox" VerticalAlignment="Top" Height="169" Width="422" FontSize="72"/>
         <TextBlock HorizontalAlignment="Left" Margin="1162,0,0,0" TextWrapping="Wrap" Text="V1.0" VerticalAlignment="Top" FontSize="48" Width="158"/>
-        <ComboBox HorizontalAlignment="Center" Margin="0,324,0,0" VerticalAlignment="Top" Width="260" Height="22" IsReadOnly="True" FontWeight="Bold" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox HorizontalAlignment="Center" Margin="0,402,0,0" VerticalAlignment="Top" Width="260" Height="22" IsReadOnly="True" FontWeight="Bold" SelectionChanged="ComboBox_SelectionChanged">
             <ComboBoxItem Content="Rock afire Explosion" FontFamily="Segoe UI" FontWeight="Bold"/>
             <ComboBoxItem Content="PTT Cybers" FontWeight="Bold"/>
             <ComboBoxItem Content="Modern Cybers" FontWeight="Bold"/>
             <ComboBoxItem Content="CU 3-Stage" FontWeight="Bold"/>
             <ComboBoxItem Content="Rock and Roll Rebellion" FontWeight="Bold"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Center" Margin="0,270,0,0" TextWrapping="Wrap" Text="Select Encoding:" VerticalAlignment="Top" Height="49" Width="260" FontSize="36"/>
-        <Button Content="Export" HorizontalAlignment="Center" Margin="0,410,0,0" VerticalAlignment="Top" FontSize="46" Width="200" Height="70"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,348,0,0" TextWrapping="Wrap" Text="Select Encoding:" VerticalAlignment="Top" Height="49" Width="260" FontSize="36"/>
+        <Button Content="Export" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="46" Width="200" Height="70"/>
         <StatusBar Margin="10,586,10,102"/>
         <ProgressBar HorizontalAlignment="Center" Height="28" Margin="0,532,0,0" VerticalAlignment="Top" Width="1260"/>
-        <Button Content="Select Show File" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" FontSize="32" Width="260"/>
+        <Button Content="Select Show File" HorizontalAlignment="Center" Margin="0,296,0,0" VerticalAlignment="Top" FontSize="32" Width="260" Click="Button_Click_1"/>
     </Grid>
 </Window>

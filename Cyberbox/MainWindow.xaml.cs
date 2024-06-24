@@ -78,6 +78,7 @@ namespace Cyberbox
             {
                 _player = new SoundPlayer(filePath);
                 _player.Play();
+                
                 if (_isPlaying)
                 {
                     // Stop the music
