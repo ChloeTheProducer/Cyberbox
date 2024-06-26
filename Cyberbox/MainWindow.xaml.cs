@@ -38,7 +38,7 @@ namespace Cyberbox
 
         private string[] splashTexts =
         {
-            "How's the weather", "Hey! Where's Perry?", "Randombeans is a cutie!",
+            "How's the weather", "Hey! Where's Perry?", "Random is a cutie!",
             "Too much benadryl and you'll be meeting the grayman", "Always piss in aisle 4... It's a security camera blindspot",
             "How much rain is too much", "What's 9 + 10", "Creeper... Aw man!", "*Windows 95 Startup Sound*",
             "The cake is a lie", "The lie is a cake", "The beans be crazy", "Roxanne Wolf is cute", "This RR Engine game is enhanced with URP",
@@ -61,6 +61,7 @@ namespace Cyberbox
         public MainWindow()
         {
             InitializeComponent();
+            
             _player = new SoundPlayer();
             _isPlaying = false;
 
