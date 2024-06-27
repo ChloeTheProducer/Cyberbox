@@ -29,7 +29,7 @@ namespace Cyberbox
         private SoundPlayer _player;
         private bool _isPlaying;
         private string _songName = "Macintosh Plus - 花の専門店 (Flower Specialty Store)"; // Replace with your song info
-       
+
 
         public MainWindow()
         {
@@ -67,11 +67,6 @@ namespace Cyberbox
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void PlayMusicInExecutableDirectory(string fileName)
         {
             string execDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -102,11 +97,6 @@ namespace Cyberbox
             {
                 System.Windows.MessageBox.Show("File not found: " + filePath, "Error", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Error);
             }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
