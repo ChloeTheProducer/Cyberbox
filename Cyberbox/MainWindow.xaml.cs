@@ -25,7 +25,6 @@ namespace Cyberbox
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private SoundPlayer _player;
         private bool _isPlaying;
         private string _songName = "Macintosh Plus - 花の専門店 (Flower Specialty Store)"; // Replace with your song info
@@ -48,10 +47,8 @@ namespace Cyberbox
         // This plays the music
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             string songFileName = "花の専門店.wav";
             PlayMusicInExecutableDirectory(songFileName);
-
         }
 
         // Updates the song info for the currently playing song... bruh
@@ -90,7 +87,6 @@ namespace Cyberbox
                     _player.PlayLooping();
                     _isPlaying = true;
                     UpdateSongInfo();
-
                 }
             }
             else
