@@ -17,7 +17,6 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 
-
 namespace Cyberbox
 {
     /// <summary>
@@ -93,6 +92,16 @@ namespace Cyberbox
             {
                 System.Windows.MessageBox.Show("File not found: " + filePath, "Error", (MessageBoxButton)MessageBoxButtons.OK, (MessageBoxImage)MessageBoxIcon.Error);
             }
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void File_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
