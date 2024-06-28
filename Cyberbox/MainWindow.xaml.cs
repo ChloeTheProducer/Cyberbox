@@ -96,7 +96,7 @@ namespace Cyberbox
 
         private void FileButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            OpenFileDialog openFileDialog = new OpenFileDialog();
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
@@ -105,6 +105,11 @@ namespace Cyberbox
         }
 
         private void Export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Video_Rectangle()
         {
 
         }
