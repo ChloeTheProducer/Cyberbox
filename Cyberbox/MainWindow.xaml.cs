@@ -26,7 +26,7 @@ namespace Cyberbox
     {
         private SoundPlayer _player;
         private bool _isPlaying;
-        private string _songName = "Macintosh Plus - 花の専門店 (Flower Specialty Store)"; // Replace with your song info
+        private string _songName = "Home Depot Theme"; // Replace with your song info
 
 
         public MainWindow()
@@ -46,7 +46,7 @@ namespace Cyberbox
         // This plays the music
         private void BGM_Click(object sender, RoutedEventArgs e)
         {
-            string songFileName = "Polish cow (English Lyrics Full Version).wav";
+            string songFileName = "The Home Depot Beat (Full).wav";
             PlayMusicInExecutableDirectory(songFileName);
         }
 

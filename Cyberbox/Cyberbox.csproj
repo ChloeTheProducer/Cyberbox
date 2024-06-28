@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Resource Include="decoder background.png" />
-    <EmbeddedResource Include="花の専門店.wav" />
   </ItemGroup>
 
 </Project>
