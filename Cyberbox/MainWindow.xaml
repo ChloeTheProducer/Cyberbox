@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Cyberbox"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Cyberbox.MainWindow"
         mc:Ignorable="d"
-        Title="Cyberbox" Height="1080" Width="1920" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF1F1F1F">
+        Title="Cyberbox" Height="1080" Width="1920" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF2E2E2E">
     <Grid>
 
         <Rectangle HorizontalAlignment="Center" Height="54" VerticalAlignment="Top" Width="1920" Stroke="Black" Fill="White"/>
@@ -17,6 +17,8 @@
         <Button Name="Export" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="46" Width="200" Height="70" Margin="1678,961,0,0" Click="Export_Click"/>
         <Button Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="199,2,0,0" VerticalAlignment="Top" Height="50" Width="110" FontSize="24" Click="Edit_Click"/>
         <Button Name="FileButton" Content="File" HorizontalAlignment="Left" Margin="55,2,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Click="FileButton_Click"/>
-        <Rectangle Name="Video" HorizontalAlignment="Left" Height="576" Margin="33,96,0,0" Stroke="Black" VerticalAlignment="Top" Width="1024" Fill="#FF0A0A0A"/>
+        <Rectangle Name="Video" HorizontalAlignment="Left" Height="576" Margin="33,90,0,0" Stroke="Black" VerticalAlignment="Top" Width="700" Fill="#FF1A1A1A"/>
+        <ProgressBar HorizontalAlignment="Center" Height="22" Margin="0,914,0,0" VerticalAlignment="Top" Width="1854"/>
+        <StatusBar Margin="33,696,33,194"/>
     </Grid>
 </Window>
