@@ -46,7 +46,7 @@ namespace Cyberbox
         // This plays the music
         private void BGM_Click(object sender, RoutedEventArgs e)
         {
-            string songFileName = "花の専門店.wav";
+            string songFileName = "Polish cow (English Lyrics Full Version).wav";
             PlayMusicInExecutableDirectory(songFileName);
         }
 
