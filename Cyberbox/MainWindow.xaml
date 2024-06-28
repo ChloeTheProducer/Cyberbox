@@ -12,13 +12,13 @@
     </Window.Background>
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="35" Margin="28,1023,0,0" VerticalAlignment="Top" Width="706" RadiusX="5.5" RadiusY="5.5" Stroke="Black" Fill="Black"/>
-        <TextBlock x:Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,27" Height="31" Width="777" FontSize="24"/>
         <Rectangle HorizontalAlignment="Center" Height="54" VerticalAlignment="Top" Width="1920" Stroke="Black" Fill="White"/>
+        <TextBlock x:Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,27" Height="31" Width="777" FontSize="24"/>
         <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="1666,-2,0,0" TextWrapping="Wrap" Text="Cyberbox" VerticalAlignment="Top" Height="54" Width="166" FontSize="36" Foreground="Black"/>
         <TextBlock x:Name="Version" Margin="1837,-2,0,0" TextWrapping="Wrap" Text="V1.0" VerticalAlignment="Top" FontSize="36" Height="54" Foreground="Black"/>
-        <Button x:Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="440,2,0,0" VerticalAlignment="Top" Height="50" Width="110" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit" Click="Quit_Click" RenderTransformOrigin="0.505,0.48"/>
-        <Button x:Name="BGM" Content="BGM" Margin="295,2,1515,1028" FontSize="24" Click="BGM_Click" ToolTip="Enables and disables BGM"/>
-        <Button x:Name="Export" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="46" Width="200" Height="70" Margin="1661,961,0,0" Click="Export_Click"/>
+        <Button Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="440,2,0,0" VerticalAlignment="Top" Height="50" Width="110" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit" Click="Quit_Click" RenderTransformOrigin="0.505,0.48"/>
+        <Button Name="BGM" Content="BGM" Margin="295,2,1515,1028" FontSize="24" Click="BGM_Click" ToolTip="Enables and disables BGM"/>
+        <Button Name="Export" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="46" Width="200" Height="70" Margin="1661,961,0,0" Click="Export_Click"/>
         <Button Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="154,2,0,0" VerticalAlignment="Top" Height="50" Width="110" FontSize="24" Click="Edit_Click"/>
         <Button Name="File" Content="File" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Click="File_Click"/>
         <StatusBar Margin="33,601,1218,87"/>
