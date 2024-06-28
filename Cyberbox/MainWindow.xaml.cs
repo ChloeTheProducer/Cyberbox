@@ -44,7 +44,7 @@ namespace Cyberbox
         }
 
         // This plays the music
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BGM_Click(object sender, RoutedEventArgs e)
         {
             string songFileName = "花の専門店.wav";
             PlayMusicInExecutableDirectory(songFileName);
@@ -94,12 +94,17 @@ namespace Cyberbox
             }
         }
 
-        private void Edit_Click(object sender, RoutedEventArgs e)
+        private void File_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
         }
 
-        private void File_Click(object sender, RoutedEventArgs e)
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
         {
 
         }
