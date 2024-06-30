@@ -17,9 +17,9 @@
         <Button Name="Export" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="46" Width="200" Height="70" Margin="1710,1000,0,0" Click="Export_Click" Background="#FF1A1A1A" Foreground="White"/>
         <Button Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="176,2,0,0" VerticalAlignment="Top" Height="50" Width="110" FontSize="24" Click="Edit_Click"/>
         <Button Name="FileButton" Content="File" HorizontalAlignment="Left" Margin="32,2,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Click="FileButton_Click"/>
-        <Rectangle Name="Video" HorizontalAlignment="Left" Height="609" Margin="10,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="871" Fill="#FF1A1A1A"/>
+        <Rectangle Name="Video" HorizontalAlignment="Left" Height="609" Margin="10,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="636" Fill="#FF1A1A1A"/>
         <StatusBar Margin="33,804,33,98" Background="#FF1A1A1A" Foreground="White"/>
-        <Rectangle HorizontalAlignment="Left" Height="609" Margin="906,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="240" Fill="#FF1A1A1A"/>
-        <Rectangle HorizontalAlignment="Left" Height="609" Margin="1171,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="739" Fill="#FF1A1A1A"/>
+        <Rectangle HorizontalAlignment="Left" Height="609" Margin="679,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="581" Fill="#FF1A1A1A"/>
+        <Rectangle HorizontalAlignment="Left" Height="609" Margin="1292,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="618" Fill="#FF1A1A1A"/>
     </Grid>
 </Window>

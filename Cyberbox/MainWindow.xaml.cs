@@ -26,7 +26,7 @@ namespace Cyberbox
     {
         private SoundPlayer _player;
         private bool _isPlaying;
-        private string _songName = "Home Depot Theme"; // Replace with your song info
+        private string _songName = "Scarlet Fire - Otis McDonald (as famously heard on DankPods)"; // Replace with your song info
 
 
         public MainWindow()
@@ -46,7 +46,7 @@ namespace Cyberbox
         // This plays the music
         private void BGM_Click(object sender, RoutedEventArgs e)
         {
-            string songFileName = "The Home Depot Beat (Full).wav";
+            string songFileName = @"BGM\Scarlet Fire - Otis McDonald.wav";
             PlayMusicInExecutableDirectory(songFileName);
         }
 
