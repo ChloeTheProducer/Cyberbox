@@ -98,5 +98,15 @@ namespace Cyberbox
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
         }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
