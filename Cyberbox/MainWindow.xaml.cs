@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Media;
@@ -94,11 +95,6 @@ namespace Cyberbox
             }
         }
 
-        private void FileButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-        }
-
         private void Export_Click(object sender, RoutedEventArgs e)
         {
 
@@ -107,6 +103,12 @@ namespace Cyberbox
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e)
+        {
+            Window1 Import_Click = new Window1();
+            Import_Click.Show();
         }
     }
 }
