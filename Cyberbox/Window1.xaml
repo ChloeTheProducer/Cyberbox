@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Import Settings" Height="450" Width="600">
     <Grid>
-        
+        <Button Content="Select show file" HorizontalAlignment="Center" Margin="0,31,0,0" VerticalAlignment="Top" Width="500" Click="ShowFile_Click"/>
+        <TextBox Name="FileNameTextBox" HorizontalAlignment="Left" Margin="63,84,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBlock Name="TextBlock1" HorizontalAlignment="Left" Margin="224,84,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

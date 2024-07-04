@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,17 @@ namespace Cyberbox
         public Window1()
         {
             InitializeComponent();
+        }
+
+        private void ShowFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            Nullable<bool> result = openFileDlg.ShowDialog();
+            if (result == true)
+            {
+                FileNameTextBox.Text = openFileDialog.FileName;
+                TextBlock1.Text = File.ReadAllText(openFileDialog.FileName);
+            }
         }
     }
 }
