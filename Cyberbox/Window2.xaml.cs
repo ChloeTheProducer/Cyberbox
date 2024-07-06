@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,26 +15,23 @@ using System.Windows.Shapes;
 namespace Cyberbox
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Window2.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Window2 : Window
     {
-
-        public Window1()
+        public Window2()
         {
             InitializeComponent();
         }
 
-        // Open File Dialog on Click
-        private void ShowFile_Click(object sender, RoutedEventArgs e)
+        private void No_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.Close();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Yes_Click()
         {
-            Window2 Cancel_Click = new Window2();
-            Cancel_Click.Show();
+            Window1.Close(); 
         }
     }
 }
