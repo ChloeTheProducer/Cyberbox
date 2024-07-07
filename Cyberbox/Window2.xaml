@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cyberbox"
         mc:Ignorable="d"
-        Title="Cancel Import" Height="200" Width="550">
+        Title="Cancel Import" Height="200" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" Text="Are you sure you want to cancel importing?" VerticalAlignment="Top" Height="57" Width="490" FontSize="24"/>
-        <Button Content="No" HorizontalAlignment="Left" Margin="459,136,0,0" VerticalAlignment="Top" Height="38" Width="81" FontSize="24" Click="No_Click"/>
-        <Button Content="Yes" HorizontalAlignment="Left" Margin="363,136,0,0" VerticalAlignment="Top" Width="81" Height="38" FontSize="24" Click="Yes_Click"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,35,0,0" TextWrapping="Wrap" Text="Are you sure you want to cancel importing?" VerticalAlignment="Top" Height="57" Width="490" FontSize="24"/>
+        <Button Content="No" HorizontalAlignment="Left" Margin="439,110,0,0" VerticalAlignment="Top" Height="38" Width="81" FontSize="24" Click="No_Click"/>
+        <Button Content="Yes" HorizontalAlignment="Left" Margin="343,110,0,0" VerticalAlignment="Top" Width="81" Height="38" FontSize="24" Click="Yes_Click"/>
 
     </Grid>
 </Window>

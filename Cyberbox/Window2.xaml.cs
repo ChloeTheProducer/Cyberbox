@@ -29,9 +29,9 @@ namespace Cyberbox
             this.Close();
         }
 
-        private void Yes_Click()
+        private void Yes_Click(object sender, RoutedEventArgs e)
         {
-            Window1.Close(); 
+            
         }
     }
 }
