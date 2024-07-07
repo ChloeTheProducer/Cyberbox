@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Cyberbox"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Cyberbox.MainWindow"
         mc:Ignorable="d"
-        Title="Cyberbox" Height="1080" Width="1920" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF2E2E2E">
+        Title="Cyberbox" Height="1080" Width="1920" Foreground="White" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Background="#FF2E2E2E" Icon="/logo.png">
     <Grid>
 
         <Rectangle HorizontalAlignment="Center" Height="54" VerticalAlignment="Top" Width="1920" Stroke="Black" Fill="White"/>
