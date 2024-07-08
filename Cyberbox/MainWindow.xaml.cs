@@ -41,7 +41,7 @@ namespace Cyberbox
         // Quits the program ya idiot, what'd ya think it was gonna do delete system32
         private void Quit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Environment.Exit(0);
         }
 
         // This plays the music

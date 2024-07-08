@@ -47,5 +47,10 @@ namespace Cyberbox
                 this.Close();
             }
         }
+
+        private void import_click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
