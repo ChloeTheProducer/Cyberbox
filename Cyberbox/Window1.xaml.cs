@@ -34,8 +34,18 @@ namespace Cyberbox
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            Window2 Cancel_Click = new Window2();
-            Cancel_Click.Show();
+            string messageBoxText = "Are you sure you want to cancel importing?";
+            string caption = "Cancel Import";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+
+            result = System.Windows.MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Cyberbox
         private SoundPlayer _player;
         private bool _isPlaying;
         private string _songName = "Bensound - The Elevator Bossanova"; // Replace with your song info
-
+        
 
         public MainWindow()
         {
