@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+// The import window
 namespace Cyberbox
 {
     /// <summary>
@@ -32,6 +33,7 @@ namespace Cyberbox
             
         }
 
+        // Opens a message box to confirm if you wanna cancel or not
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             string messageBoxText = "Are you sure you want to cancel importing?";
@@ -48,6 +50,7 @@ namespace Cyberbox
             }
         }
 
+        // saves the show file to ram to load into the software
         private void import_click(object sender, RoutedEventArgs e)
         {
 

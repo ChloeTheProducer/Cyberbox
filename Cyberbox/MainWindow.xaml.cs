@@ -17,7 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-
+// This entire program was written by a trans girl.
+// I'm not helping the trans girl programmer stereotype much am i...
 namespace Cyberbox
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Cyberbox
         private bool _isPlaying;
         private string _songName = "Bensound - The Elevator Bossanova"; // Replace with your song info
         
-
+        // Main window... what else you want
         public MainWindow()
         {
             InitializeComponent();
@@ -64,6 +65,8 @@ namespace Cyberbox
             }
         }
 
+        // Plays the background music depending on the current state... Chuck persons ecco jams vol. 1
+        // is a vibe btw
         private void PlayMusicInExecutableDirectory(string fileName)
         {
             string execDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -95,16 +98,28 @@ namespace Cyberbox
             }
         }
 
+        // This will run the converter to export data to .wav depending on the designated show file type
         private void Export_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Drops down a menu to select different options
+        // (Note: Not sure if im gonna keep this because all this software does is
+        // take the show files and converts them to .wav. You dont really need any extra options for that.
+        // all you need is to import your file. If you accidentally selected the wrong format type for
+        // the show file, then all you need is to select import and redo the import
+        // cause trying to setup an auto determine to determine an exact stage type for the show
+        // would be difficult as one show file would/could work with multiple stages and shows.
+        // But i will setup an auto determine to generalize stage types for that format. So if you import
+        // a .cshw it will give you the stage options for that format so you just have to select if
+        // its for modern cybers or ptt cybers.)
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Opens the window to select a show file
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             Window1 Import_Click = new Window1();
