@@ -12,10 +12,9 @@
         <Rectangle HorizontalAlignment="Center" Height="54" VerticalAlignment="Top" Width="1920" Stroke="Black" Fill="White"/>
         <TextBlock x:Name="songInfoTextBlock" Text="No Song Playing" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="33,0,0,27" Height="31" Width="1227" FontSize="24"/>
         <TextBlock x:Name="Title" HorizontalAlignment="Left" Margin="845,-2,0,0" TextWrapping="Wrap" Text="Cyberbox V1.0" VerticalAlignment="Top" Height="54" Width="244" FontSize="36" Foreground="Black"/>
-        <Button Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="1808,2,0,0" VerticalAlignment="Top" Height="50" Width="110" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit" Click="Quit_Click" RenderTransformOrigin="0.505,0.48"/>
-        <Button Name="BGM" Content="BGM" Margin="316,2,1494,1028" FontSize="24" Click="BGM_Click" ToolTip="Enables and disables BGM"/>
+        <Button Name="Quit" Content="Quit" HorizontalAlignment="Left" Margin="1777,2,0,0" VerticalAlignment="Top" Height="50" Width="110" ToolTip="Quits the program" FontSize="24" AutomationProperties.Name="Quit" Click="Quit_Click" RenderTransformOrigin="0.505,0.48"/>
+        <Button Name="BGM" Content="BGM" Margin="176,2,1634,1028" FontSize="24" Click="BGM_Click" ToolTip="Enables and disables BGM"/>
         <Button Name="Export" Content="Export" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="46" Width="200" Height="70" Margin="1706,996,0,0" Click="Export_Click" Background="#FF1A1A1A" Foreground="White"/>
-        <Button Name="Edit" Content="Edit" HorizontalAlignment="Left" Margin="176,2,0,0" VerticalAlignment="Top" Height="50" Width="110" FontSize="24" Click="Edit_Click"/>
         <Button Name="Import" Content="Import" HorizontalAlignment="Left" Margin="32,2,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="24" Click="Import_Click"/>
         <Rectangle Name="DataWaveform" HorizontalAlignment="Left" Height="500" Margin="9,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="620" Fill="#FF1A1A1A"/>
         <Rectangle Name="ConvertedBits" HorizontalAlignment="Left" Height="500" Margin="650,67,0,0" Stroke="Black" VerticalAlignment="Top" Width="620" Fill="#FF1A1A1A"/>
