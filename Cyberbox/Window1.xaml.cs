@@ -30,7 +30,20 @@ namespace Cyberbox
         // Open File Dialog on Click
         private void ShowFile_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Configure open file dialog box
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.DefaultExt = ".rshw .cshw"; // Default file extension
+            dialog.Filter = "RR Engine Show Files RSHW|*.rshw|CSHW|*.cshw"; // Filter files by extension
+
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dialog.FileName;
+            }
         }
 
         // Opens a message box to confirm if you wanna cancel or not
@@ -51,7 +64,7 @@ namespace Cyberbox
         }
 
         // saves the show file to ram to load into the software
-        private void import_click(object sender, RoutedEventArgs e)
+        private void Import_Click(object sender, RoutedEventArgs e)
         {
 
         }
