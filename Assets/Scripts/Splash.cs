@@ -3,7 +3,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.SceneManagement;  // For scene management
 
-public class SplashScreen : MonoBehaviour
+public class Splash : MonoBehaviour
 {
     public TextMeshProUGUI splashText;  // Assign your "Warning" TextMeshProUGUI here
     public float fadeDuration = 1.5f;    // Duration of fade

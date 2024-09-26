@@ -74,3 +74,4 @@ crashlytics-build.properties
 # ignored build directories
 /linux build
 /windows build
+/macos build
