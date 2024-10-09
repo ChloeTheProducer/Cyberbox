@@ -1,20 +1,15 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Quit : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created 
-    void Start()
+    public void QuitGame()
     {
-        
-    }
+        // This will only work in a built game, not in the editor.
+        Application.Quit();
 
-    // Update is called once per frame
-    void Update()
-    {
-       GetComponent<GameObject>();
-        {
-            Application.Quit();
-        }
+        // If you're testing in the editor, you can uncomment the next line
+        // to simulate quitting.
+        //UnityEditor.EditorApplication.isPlaying = false;
     }
 }

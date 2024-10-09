@@ -27,7 +27,7 @@ public class SplashText : MonoBehaviour
         "We make good team", "Hm, is nice", "Sandvich make me strong", "Counter-terrorists win", "Are we rushing, or we going sneaky deaky like", "Easy peasy lemon squeazy", "Bingo bango bongo bish bash bosh",
         "Don’t Smoke Crayolas!", "That medic is jschlatt", "Femboys??? Would", "F1nn5ter??? Would", "What the flip", "swing, your, arms, from side to side, and now you're doin the mario", 
         "Would ya turn off the dog... TURN OFF THE FRUITCAKE DOG... THE BUTTON ON THE LEFT", "makin pancakes, makin bacon pancakes, take some bacon and I put it in a pancake, bacon pancakes thats what its gonna make, baacooon pancaaaaaakes.", 
-        "Connection Terminated", "Have a day", "He's here, he's there, he's everywhere. who you gonna call? Psychic friend Fredbear", ""
+        "Connection Terminated", "Have a day", "He's here, he's there, he's everywhere. who you gonna call? Psychic friend Fredbear", "Teehee nyaa~ :3"
     };
 
     // Display Random splash text on start
