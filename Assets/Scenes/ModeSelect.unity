@@ -812,7 +812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1136, y: 689}
+  m_AnchoredPosition: {x: 1136, y: 696.3}
   m_SizeDelta: {x: 833.9908, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &651511340
@@ -827,7 +827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f34e9b8fcd28a2d8858577afb2a1057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pdfFilePath: /home/chloe/User Manual.pdf
 --- !u!114 &651511341
 MonoBehaviour:
   m_ObjectHideFlags: 0
