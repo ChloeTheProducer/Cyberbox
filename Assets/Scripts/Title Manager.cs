@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using TMPro;
 
 /// <summary>
 /// This handles the messagebox window system, despite the name. Also some GUI window stuff
@@ -13,13 +14,13 @@ public class TitleManager : MonoBehaviour
     public AudioClip[] dayClips; // An array to store clips for each day
     public float volume;
 
+    public TextMeshProUGUI songCredits;
+
     void Start()
     {
         
         if (standaloneMode != true)
         {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
             volume = 0.2f;
             audioSource = GetComponent<AudioSource>();
             DayOfWeek wk = DateTime.Today.DayOfWeek;
@@ -30,6 +31,9 @@ public class TitleManager : MonoBehaviour
                 audioSource.clip = dayClips[(int)wk];
                 audioSource.Play();
                 audioSource.volume = volume;
+
+                // Set the songCredits text with information about the song playing
+                songCredits.text = $"{dayClips[(int)wk].name}";
             }
         }
     }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using UnityEngine.SceneManagement;  // For scene management
 
 public class TextFade : MonoBehaviour
 {
