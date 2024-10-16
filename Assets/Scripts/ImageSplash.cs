@@ -1,10 +1,13 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement; // For scene management
 using System.Collections;
+using Unity.VisualScripting;
 
 public class ImageSplash : MonoBehaviour
 {
+    [Serialize]
     public TextMeshProUGUI titleText;      // Assign the title TextMeshProUGUI
     public SpriteRenderer[] sprites;       // Assign the SpriteRenderers you want to fade
     public float fadeDuration = 1.5f;      // Duration of fade
@@ -100,3 +103,4 @@ public class ImageSplash : MonoBehaviour
         }
     }
 }
+#endif

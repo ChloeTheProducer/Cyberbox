@@ -21,7 +21,7 @@ public class TitleManager : MonoBehaviour
         
         if (standaloneMode != true)
         {
-            volume = 0.2f;
+            volume = 0.5f;
             audioSource = GetComponent<AudioSource>();
             DayOfWeek wk = DateTime.Today.DayOfWeek;
 
