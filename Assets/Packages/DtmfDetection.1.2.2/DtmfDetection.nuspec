@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>DtmfDetection</id>
+    <version>1.2.2</version>
+    <title>DtmfDetection</title>
+    <authors>Robert Hofmann</authors>
+    <owners>Robert Hofmann</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>Implementation of the Goertzel algorithm for the detection of DTMF tones (aka touch tones) in audio data. Install the package DtmfDetection.NAudio for integration with NAudio.
+
+Documentation: https://github.com/bert2/DtmfDetection
+
+Release notes: Refactor wait time estimation of the `BackgroundAnalyzer` to a less handcrafted solution.</description>
+    <releaseNotes>Refactor wait time estimation of the `BackgroundAnalyzer` to a less handcrafted solution.</releaseNotes>
+    <tags>Goertzel; DTMF; touch tone; detection; dsp; signal processing; audio analysis</tags>
+    <repository url="https://github.com/bert2/DtmfDetection.git" commit="a2d9c58d35e46a87704d9ca0e12a8a66edba3912" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.1" />
+    </dependencies>
+  </metadata>
+</package>

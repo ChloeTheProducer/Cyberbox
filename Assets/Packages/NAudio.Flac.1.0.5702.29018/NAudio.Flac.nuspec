@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>NAudio.Flac</id>
+        <version>1.0.5702.29018</version>
+        <title>NAudio.Flac</title>
+        <authors>Nathan Harrenstein</authors>
+        <owners>Nathan Harrenstein</owners>
+        <projectUrl>https://github.com/nharren/NAudio.Flac</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>NAudio Flac Library from code.google.com/p/naudio-flac</description>
+        <copyright />
+        <dependencies>
+            <dependency id="NAudio" version="1.7.3" />
+        </dependencies>
+    </metadata>
+</package>

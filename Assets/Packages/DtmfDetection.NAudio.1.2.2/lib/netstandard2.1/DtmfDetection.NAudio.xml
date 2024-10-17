@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DtmfDetection.NAudio</name>
+    </assembly>
+    <members>
+        <member name="T:DtmfDetection.NAudio.AudioFile">
+            <summary>Convenience implementation of `ISamples` for `WaveStream` audio. `WaveStream`s are commonly used for finite data like audio files. The `Analyzer` uses `ISamples` to read the input data in blocks and feed them to the `Detector`.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioFile.Channels">
+            <summary>Returns the number of channels in the `WaveStream` input or `1` when mono-conversion has been enabled.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioFile.SampleRate">
+            <summary>Returns the target sample rate this `AudioFile` has been created with.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioFile.Position">
+            <summary>Returns the current position of the input `WaveStream`.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.AudioFile.#ctor(NAudio.Wave.WaveStream,System.Int32,System.Boolean)">
+            <summary>Creates a new `AudioFile` from a `WaveStream` input. Also resamples the input and optionally converts it to single-channel audio.</summary>
+            <param name="source">The input audio data (typically finite).</param>
+            <param name="targetSampleRate">Used to resample the `WaveStream` input. This should match the sample rate (in Hz) the `Analyzer` is using (via `Config.SampleRate`).</param>
+            <param name="forceMono">Toggles conversion of multi-channel audio to mono.</param>
+        </member>
+        <member name="M:DtmfDetection.NAudio.AudioFile.Read(System.Single[],System.Int32)">
+            <summary>Reads `count` samples from the input and writes them into `buffer`.</summary>
+            <param name="buffer">The output array to write the read samples to.</param>
+            <param name="count">The number of samples to read.</param>
+            <returns>The number of samples that have been read. Will always equal `count` except when the end of the input has been reached, in which case `Read()` returns a number less than `count`.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.AudioStream">
+            <summary>Convenience implementation of `ISamples` for an infinite `IWaveIn` audio stream. The `Analyzer` uses `ISamples` to read the input data in blocks and feed them to the `Detector`.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioStream.Channels">
+            <summary>Returns the number of channels in the `IWaveIn` input or `1` when mono-conversion has been enabled.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioStream.SampleRate">
+            <summary>Returns the target sample rate this `AudioStream` has been created with.</summary>
+        </member>
+        <member name="P:DtmfDetection.NAudio.AudioStream.Position">
+            <summary>Simply calls `DateTime.Now.TimeOfDay` and returns the result.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.AudioStream.#ctor(NAudio.Wave.IWaveIn,System.Int32,System.Boolean)">
+            <summary>Creates a new `AudioStream` from an `IWaveIn` input by buffering it with a `BufferedWaveProvider`. Also resamples the input and optionally converts it to single-channel audio.</summary>
+            <param name="source">The infinite input audio stream.</param>
+            <param name="targetSampleRate">Used to resample the `IWaveIn` input. This should match the sample rate (in Hz) the `Analyzer` is using (via `Config.SampleRate`).</param>
+            <param name="forceMono">Toggles conversion of multi-channel audio to mono.</param>
+        </member>
+        <member name="M:DtmfDetection.NAudio.AudioStream.Read(System.Single[],System.Int32)">
+            <summary>Reads `count` samples from the input and writes them into `buffer`. Will block as long as it takes for the input to buffer the requested number of samples.</summary>
+            <param name="buffer">The output array to write the read samples to.</param>
+            <param name="count">The number of samples to read.</param>
+            <returns>The number of samples that have been read. Will always equal `count` except when `StopWaiting()` has been called,in which case `Read()` returns `0`.</returns>
+        </member>
+        <member name="M:DtmfDetection.NAudio.AudioStream.StopWaiting">
+            <summary>Stops waiting for the input to buffer data. Some `IWaveIn`s don't have data available continuously. For instance a `WasapiLoopbackCapture` will only have data as long as the OS is playing some audio. Calling `StopWaiting()` will break the infinite wait loop and the `Analyzer` processing this `AudioStream` will consider it being "finished". This in turn helps to gracefully exit the thread running the analysis.</summary>
+        </member>
+        <member name="T:DtmfDetection.NAudio.BackgroundAnalyzer">
+            <summary>Helper that does audio analysis in a background thread. Useful when analyzing infinite inputs like mic-in our the current audio output.</summary>
+        </member>
+        <member name="E:DtmfDetection.NAudio.BackgroundAnalyzer.OnDtmfDetected">
+            <summary>Fired when a DTMF change (a DTMF tone started or stopped) has been detected.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.BackgroundAnalyzer.#ctor(NAudio.Wave.IWaveIn,System.Boolean,System.Action{DtmfDetection.DtmfChange},System.Nullable{DtmfDetection.Config},DtmfDetection.Interfaces.IAnalyzer)">
+            <summary>Creates a new `BackgroundAnalyzer` and immediately starts listening to the `IWaveIn` input. `Dispose()` this instance to stop the background thread doing the analysis.</summary>
+            <param name="source">The input data. Must not be in recording state.</param>
+            <param name="forceMono">Toggles conversion of multi-channel audio to mono before the analysis.</param>
+            <param name="onDtmfDetected">Optional handler for the `OnDtmfDetected` event.</param>
+            <param name="config">Optional detector configuration. Defaults to `Config.Default`.</param>
+            <param name="analyzer">Optional; can be used to inject a custom analyzer implementation. Defaults to `Analyzer`.</param>
+        </member>
+        <member name="M:DtmfDetection.NAudio.BackgroundAnalyzer.Dispose">
+            <summary>Calls `IWaveIn.StopRecording()` on the input stream and halts the background thread doing the analysis.</summary>
+        </member>
+        <member name="T:DtmfDetection.NAudio.BufferedWaveProviderExt">
+            <summary>Provides an extension method that waits until a `BufferedWaveProvider` has read enough data.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.BufferedWaveProviderExt.WaitForSamples(NAudio.Wave.BufferedWaveProvider,System.Int32)">
+            <summary>Blocks the thread for as long as the `BufferedWaveProvider` minimally should need to buffer at least `count` sample frames. The wait time is estimated from the difference of the number of already buffered bytes to the number of requested bytes.</summary>
+            <param name="source">The buffered source of input data.</param>
+            <param name="count">The requested number of samples frames. Used to calculate the number of requested bytes.</param>
+            <returns>Returns `false` when the estimated wait time was sufficient to fill the buffer, or `true` when more waiting is needed.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.IWaveInExt">
+            <summary>Provides an extensions method to buffer a `IWaveIn` stream using a `BufferedWaveProvider`.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.IWaveInExt.ToBufferedWaveProvider(NAudio.Wave.IWaveIn)">
+            <summary>Creates a `BufferedWaveProvider` for a `IWaveIn` and returns it.</summary>
+            <param name="source">The `IWaveIn` stream providing the input data.</param>
+            <returns>The `BufferedWaveProvider` buffering the input stream.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.MonoSampleProvider">
+            <summary>Decorates an `ISampleProvider` with a mono-conversion step.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.MonoSampleProvider.#ctor(NAudio.Wave.ISampleProvider)">
+            <summary>Creates a new `MonoSampleProvider` from a multi-channel `ISampleProvider`.</summary>
+            <param name="sourceProvider">The `ISampleProvider` providing the source samples.</param>
+        </member>
+        <member name="P:DtmfDetection.NAudio.MonoSampleProvider.WaveFormat">
+            <summary>The `WaveFormat` of the decorated `ISampleProvider`. Will match match the `WaveFormat` of the input `ISampleProvider` except that it will be mono (`WaveFormat.Channels` = 1).</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.MonoSampleProvider.Read(System.Single[],System.Int32,System.Int32)">
+            <summary>Tries to read `count` sample frames from the input `ISampleProvider`, averages the sample values across all channels and writes one mixed sample value for each sample frame into `buffer`.</summary>
+            <param name="buffer">The buffer to fill with samples.</param>
+            <param name="offset">The offset into `buffer`.</param>
+            <param name="count">The number of sample frames to read.</param>
+            <returns>The number of samples written to the buffer.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.SampleProviderExt">
+            <summary>Provides extensions methods for `ISampleProvider`s.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.SampleProviderExt.Resample(NAudio.Wave.ISampleProvider,System.Int32)">
+            <summary>Resamples the input data to the specified target sample rate using the `WdlResamplingSampleProvider`. Does nothing in case the sample rate already matches.</summary>
+            <param name="source">The `ISampleProvider` providing the source samples.</param>
+            <param name="targetSampleRate">The sample rate to convert the provided samples to.</param>
+            <returns>A new `ISampleProvider` having the specified target sample rate.</returns>
+        </member>
+        <member name="M:DtmfDetection.NAudio.SampleProviderExt.AsMono(NAudio.Wave.ISampleProvider)">
+            <summary>Converts multi-channel input data to mono by avering all channels. Does nothing in case the input data already is mono.</summary>
+            <param name="source">The `ISampleProvider` providing the source samples.</param>
+            <returns>A new `ISampleProvider` having only one channel.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.WaveFormatExt">
+            <summary>Provides an extension method to convert a byte size to a duration based on a wave format.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.WaveFormatExt.ConvertByteSizeToLatency(NAudio.Wave.WaveFormat,System.Int32)">
+            <summary>Gets the latency in milliseconds equivalent to the size of a wave buffer.</summary>
+            <param name="waveFormat">The format of the wave buffer.</param>
+            <param name="bytes">The size of the buffer in bytes.</param>
+            <returns>The latency in milliseconds.</returns>
+        </member>
+        <member name="T:DtmfDetection.NAudio.WaveStreamExt">
+            <summary>Provides an extension method to detect DTMF tones in a `WaveStream`.</summary>
+        </member>
+        <member name="M:DtmfDetection.NAudio.WaveStreamExt.DtmfChanges(NAudio.Wave.WaveStream,System.Boolean,System.Nullable{DtmfDetection.Config})">
+            <summary>Detects DTMF tones in a `WaveStream`.</summary>
+            <param name="waveStream">The input audio data as a `WaveStream`.</param>
+            <param name="forceMono">Toggles conversion of multi-channel audio to mono before the analysis.</param>
+            <param name="config">Optional detector configuration. Defaults to `Config.Default`.</param>
+            <returns>All detected DTMF tones as a list of `DtmfChange`s.</returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MemoryPack.UnityShims</name>
+    </assembly>
+    <members>
+        <member name="T:UnityEngine.Vector2">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> x<br/>
+            <b>float</b> y<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Vector3">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> x<br/>
+            <b>float</b> y<br/>
+            <b>float</b> z<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Vector4">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> x<br/>
+            <b>float</b> y<br/>
+            <b>float</b> z<br/>
+            <b>float</b> w<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Quaternion">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> x<br/>
+            <b>float</b> y<br/>
+            <b>float</b> z<br/>
+            <b>float</b> w<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Color">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> r<br/>
+            <b>float</b> g<br/>
+            <b>float</b> b<br/>
+            <b>float</b> a<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Bounds">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>UnityEngine.Vector3</b> center<br/>
+            <b>UnityEngine.Vector3</b> extents<br/>
+            <b>UnityEngine.Vector3</b> size<br/>
+            <b>UnityEngine.Vector3</b> max<br/>
+            <b>UnityEngine.Vector3</b> min<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Rect">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> x<br/>
+            <b>float</b> y<br/>
+            <b>float</b> width<br/>
+            <b>float</b> height<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.AnimationCurve">
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>UnityEngine.WrapMode</b> postWrapMode<br/>
+            <b>UnityEngine.WrapMode</b> preWrapMode<br/>
+            <b>UnityEngine.Keyframe[]</b> keys<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Keyframe">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> time<br/>
+            <b>float</b> value<br/>
+            <b>float</b> inTangent<br/>
+            <b>float</b> outTangent<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Matrix4x4">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> m00<br/>
+            <b>float</b> m10<br/>
+            <b>float</b> m20<br/>
+            <b>float</b> m30<br/>
+            <b>float</b> m01<br/>
+            <b>float</b> m11<br/>
+            <b>float</b> m21<br/>
+            <b>float</b> m31<br/>
+            <b>float</b> m02<br/>
+            <b>float</b> m12<br/>
+            <b>float</b> m22<br/>
+            <b>float</b> m32<br/>
+            <b>float</b> m03<br/>
+            <b>float</b> m13<br/>
+            <b>float</b> m23<br/>
+            <b>float</b> m33<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Gradient">
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>UnityEngine.GradientColorKey[]</b> colorKeys<br/>
+            <b>UnityEngine.GradientAlphaKey[]</b> alphaKeys<br/>
+            <b>UnityEngine.GradientMode</b> mode<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.GradientAlphaKey">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>float</b> alpha<br/>
+            <b>float</b> time<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Color32">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>byte</b> r<br/>
+            <b>byte</b> g<br/>
+            <b>byte</b> b<br/>
+            <b>byte</b> a<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.RectOffset">
+            <remarks>
+            MemoryPack GenerateType: Object<br/>
+            <code>
+            <b>int</b> left<br/>
+            <b>int</b> right<br/>
+            <b>int</b> top<br/>
+            <b>int</b> bottom<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.LayerMask">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>int</b> value<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Vector2Int">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>int</b> x<br/>
+            <b>int</b> y<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.Vector3Int">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>int</b> x<br/>
+            <b>int</b> y<br/>
+            <b>int</b> z<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.RangeInt">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>int</b> start<br/>
+            <b>int</b> length<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.RectInt">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>int</b> x<br/>
+            <b>int</b> y<br/>
+            <b>int</b> width<br/>
+            <b>int</b> height<br/>
+            </code>
+            </remarks>
+        </member>
+        <member name="T:UnityEngine.BoundsInt">
+            <remarks>
+            MemoryPack GenerateType: unmanaged<br/>
+            <code>
+            <b>UnityEngine.Vector3Int</b> position<br/>
+            <b>UnityEngine.Vector3Int</b> size<br/>
+            </code>
+            </remarks>
+        </member>
+    </members>
+</doc>

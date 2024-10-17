@@ -1,0 +1,592 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DtmfDetection</name>
+    </assembly>
+    <members>
+        <member name="T:DtmfDetection.Analyzer">
+            <summary>The `Analyzer` reads sample blocks of size `Config.SampleBlockSize * ISamples.Channels` from the input sample data and feeds each sample block to its `IDetector` every time `AnalyzeNextBlock()` is called. An internal state machine is used to skip redundant reports of the same DTMF tone detected in consecutive sample blocks. Instead only the starting and stop position of each DMTF tone will be reported. When no more samples are available the property `MoreSamplesAvailable` will be set to `false` and the analysis is considered finished (i.e. subsequent calls to `AnalyzeNextBlock()` should be avoided as they might fail or result in undefined behavior, depending on the `ISamples` implementation.</summary>
+        </member>
+        <member name="M:DtmfDetection.Analyzer.#ctor(DtmfDetection.Interfaces.ISamples,DtmfDetection.Interfaces.IDetector)">
+            <summary>Creates a new `Analyzer` that will feed the given sample data to the given `IDetector`.</summary>
+            <param name="samples">The samples to analyze. Its number of channels must match the number of channels the `IDetector` has been created for. Its sample rate must match the sample rate of the `IDetector`s config.</param>
+            <param name="detector">The detector to use for the analysis.</param>
+        </member>
+        <member name="M:DtmfDetection.Analyzer.Create(DtmfDetection.Interfaces.ISamples,DtmfDetection.Interfaces.IDetector)">
+            <summary>Creates a new `Analyzer` that will feed the given sample data to the given `IDetector`.</summary>
+            <param name="samples">The samples to analyze. Its number of channels must match the number of channels the `IDetector` has been created for. Its sample rate must match the sample rate of the `IDetector`s config.</param>
+            <param name="detector">The detector to use for the analysis.</param>
+            <returns>A new `Analyzer` instance.</returns>
+        </member>
+        <member name="M:DtmfDetection.Analyzer.Create(DtmfDetection.Interfaces.ISamples,DtmfDetection.Config@)">
+            <summary>Creates a new `Analyzer` using a self-created instance of `Detector` to feed the given sample data to it.</summary>
+            <param name="samples">The samples to analyze. Its sample rate must match the sample rate of the given `Config`.</param>
+            <param name="config">The detector config used to create a `Detector`.</param>
+            <returns>A new `Analyzer` instance.</returns>
+        </member>
+        <member name="P:DtmfDetection.Analyzer.MoreSamplesAvailable">
+            <summary>Indicates whether there is more data to analyze. `AnalyzeNextBlock()` should not be called when this is `false`. Is `true` initially and turns `false` as soon as `ISamples.Read()` returned a number less than `Config.SampleBlockSize`.</summary>
+        </member>
+        <member name="M:DtmfDetection.Analyzer.AnalyzeNextBlock">
+            <summary>Tries to read `Config.SampleBlockSize * ISamples.Channels` samples from the input data and runs DTMF detection on that sample block. Should only be called when `MoreSamplesAvailable` is true.</summary>
+            <returns>A list of the detected `DtmfChange`s representing DTMF tones that started or stopped in the analyzed sample block.</returns>
+        </member>
+        <member name="T:DtmfDetection.AudioData">
+            <summary>Convenience implementation of `ISamples` for PCM audio data. PCM data is usually represented as an array of `float`s. The `Analyzer` uses `ISamples` to read the input data in blocks and feed them to the `Detector`.</summary>
+        </member>
+        <member name="P:DtmfDetection.AudioData.Channels">
+            <summary>Returns the number of channels this `AudioData` has been created with.</summary>
+        </member>
+        <member name="P:DtmfDetection.AudioData.SampleRate">
+            <summary>Returns the sample rate this `AudioData` has been created with.</summary>
+        </member>
+        <member name="P:DtmfDetection.AudioData.Position">
+            <summary>Calculates and returns the current position in the PCM data.</summary>
+        </member>
+        <member name="M:DtmfDetection.AudioData.#ctor(System.Single[],System.Int32,System.Int32)">
+            <summary>Creates a new `AudioData` from the given array of `float` values which were sampled with the given sample rate and for the given number of channels.</summary>
+            <param name="samples">An array of `float`s representing the PCM data.</param>
+            <param name="channels">The number of channels in the PCM data. If this value is greater than `1` then the sample values in `samples` must be interleaved (i.e. `left sample 1, right sample 1, left sample 2, right sample 2, ...`).</param>
+            <param name="sampleRate">The sample rate of the PCM data in Hz. This should match the sample rate the `Analyzer` is using (via `Config.SampleRate`).</param>
+        </member>
+        <member name="M:DtmfDetection.AudioData.Read(System.Single[],System.Int32)">
+            <summary>Reads `count` samples from the input and writes them into `buffer`. Because the input PCM data already has the expected format, this boils down to a simple call to `Array.Copy()`.</summary>
+            <param name="buffer">The output array to write the read samples to.</param>
+            <param name="count">The number of samples to read.</param>
+            <returns>The number of samples that have been read. Will always equal `count` except when the end of the input has been reached, in which case `Read()` returns a number less than `count`.</returns>
+        </member>
+        <member name="T:DtmfDetection.Config">
+            <summary>The detector configuration.</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.DefaultThreshold">
+            <summary>The default detection threshold (tuned to normalized responses).</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.DefaultSampleBlockSize">
+            <summary>The default number of samples to analyze before the Goertzel response should be calulated (tuned to minimize error of the target frequency bin).</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.DefaultSampleRate">
+            <summary>Default rate (in Hz) at which the analyzed samples are expected to have been measured.</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.Default">
+            <summary>A default configuration instance.</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.Threshold">
+            <summary>The detection threshold. Typical values are `30`-`35` (when `NormalizeResponse` is `true`) and `100`-`115` (when `NormalizeResponse` is `false`).</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.SampleBlockSize">
+            <summary>The number of samples to analyze before the Goertzel response should be calulated. It is recommened to leave it at the default value `205` (tuned to minimize error of the target frequency bin).</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.SampleRate">
+            <summary>The sample rate (in Hz) the Goertzel algorithm expects. Sources with higher samples rates must resampled to this sample rate. It is recommended to leave it at the default value `8000`.</summary>
+        </member>
+        <member name="F:DtmfDetection.Config.NormalizeResponse">
+            <summary>Toggles normalization of the Goertzel response with the total signal energy of the sample block. Recommended setting is `true` as this provides invariance to loudness changes of the signal.</summary>
+        </member>
+        <member name="M:DtmfDetection.Config.#ctor(System.Double,System.Int32,System.Int32,System.Boolean)">
+            <summary>Creates a new `Config` instance.</summary>
+            <param name="threshold">The detection threshold. Typical values are `30`-`35` (when `normalizeResponse` is `true`) and `100`-`115` (when `normalizeResponse` is `false`).</param>
+            <param name="sampleBlockSize">The number of samples to analyze before the Goertzel response should be calulated. It is recommened to leave it at the default value `205` (tuned to minimize error of the target frequency bin).</param>
+            <param name="sampleRate">The sample rate (in Hz) the Goertzel algorithm expects. Sources with higher samples rates must resampled to this sample rate. It is recommended to leave it at the default value `8000`.</param>
+            <param name="normalizeResponse">Toggles normalization of the Goertzel response with the total signal energy of the sample block. Recommended setting is `true` as this provides invariance to loudness changes of the signal.</param>
+        </member>
+        <member name="M:DtmfDetection.Config.WithThreshold(System.Double)">
+            <summary>Creates a cloned `Config` instance from this instance, but with a new `Threshold` setting.</summary>
+            <param name="threshold">The detection threshold. Typical values are `30`-`35` (when `normalizeResponse` is `true`) and `100`-`115` (when `normalizeResponse` is `false`).</param>
+            <returns>A new `Config` instance with the specified `Threshold` setting.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.WithSampleBlockSize(System.Int32)">
+            <summary>Creates a cloned `Config` instance from this instance, but with a new `SampleBlockSize` setting.</summary>
+            <param name="sampleBlockSize">The number of samples to analyze before the Goertzel response should be calulated. It is recommened to leave it at the default value `205` (tuned to minimize error of the target frequency bin).</param>
+            <returns>A new `Config` instance with the specified `SampleBlockSize` setting.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.WithSampleRate(System.Int32)">
+            <summary>Creates a cloned `Config` instance from this instance, but with a new `SampleRate` setting.</summary>
+            <param name="sampleRate">The sample rate (in Hz) the Goertzel algorithm expects. Sources with higher samples rates must resampled to this sample rate. It is recommended to leave it at the default value `8000`.</param>
+            <returns>A new `Config` instance with the specified `SampleRate` setting.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.WithNormalizeResponse(System.Boolean)">
+            <summary>Creates a cloned `Config` instance from this instance, but with a new `NormalizeResponse` setting.</summary>
+            <param name="normalizeResponse">Toggles normalization of the Goertzel response with the total signal energy of the sample block. Recommended setting is `true` as this provides invariance to loudness changes of the signal.</param>
+            <returns>A new `Config` instance with the specified `NormalizeResponse` setting.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.Equals(DtmfDetection.Config)">
+            <summary>Indicates whether the current `Config` is equal to another `Config`.</summary>
+            <param name="other">A `Config` to compare with this `Config`.</param>
+            <returns>Returns `true` if the current `Config` is equal to `other`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.Equals(System.Object)">
+            <summary>Indicates whether this `Config` and a specified object are equal.</summary>
+            <param name="obj">The object to compare with the current `Config`.</param>
+            <returns>Returns `true` if `obj` this `Config` are the same type and represent the same value; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.op_Equality(DtmfDetection.Config,DtmfDetection.Config)">
+            <summary>Indicates whether the left-hand side `Config` is equal to the right-hand side `Config`.</summary>
+            <param name="left">The left-hand side `Config` of the comparison.</param>
+            <param name="right">The right-hand side `Config` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `Config` is equal to the right-hand side `Config`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.op_Inequality(DtmfDetection.Config,DtmfDetection.Config)">
+            <summary>Indicates whether the left-hand side `Config` is not equal to the right-hand side `Config`.</summary>
+            <param name="left">The left-hand side `Config` of the comparison.</param>
+            <param name="right">The right-hand side `Config` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `Config` is not equal to the right-hand side `Config`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Config.GetHashCode">
+            <summary>Returns the hash code for this `Config`.</summary>
+            <returns>A 32-bit signed integer that is the hash code for this `Config`.</returns>
+        </member>
+        <member name="T:DtmfDetection.Detector">
+            <summary>Creates a `Goertzel` accumulator for each of the DTMF tone low (697, 770, 852, and 941 Hz) and high frequencies (1209, 1336, 1477, and 1633 Hz) and repeats that for each audio channel in the input data. When `Detect()` is called, each sample of the input sample block is added to each `Goertzel` accumulator and afterwards the Goertzel response of each frequency is retrieved. Reports a detected DTMF tone when exactly one of the four low frequency responses crosses the detection threshold, and exactly one of the four high frequency responses crosses the detection threshold.</summary>
+        </member>
+        <member name="P:DtmfDetection.Detector.Channels">
+            <summary>The number of channels this detector has been created for. Used by the `Analyzer` to validate that this detector supports the number of channels present int the source data (`ISamples.Channels`).</summary>
+        </member>
+        <member name="P:DtmfDetection.Detector.Config">
+            <summary>The `Config` this detector has been created with.</summary>
+        </member>
+        <member name="M:DtmfDetection.Detector.#ctor(System.Int32,DtmfDetection.Config@)">
+            <summary>Creates a new `Detector` for the given number of audio channels and with the given dector config.</summary>
+            <param name="channels">The number of channels in the input sample data.</param>
+            <param name="config">The detector config.</param>
+        </member>
+        <member name="M:DtmfDetection.Detector.Detect(System.ReadOnlySpan{System.Single}@)">
+            <summary>Runs the Goertzel algorithm on all samples in `sampleBlock` and returns the DTMF key detected in each channel. `PhoneKey.None` is used in case no DTMF key has been detected in a channel.</summary>
+            <param name="sampleBlock">The block of samples to analyze. Its length should always match `Config.SampleBlockSize * Detector.Channels` except when the end of the input has been reached, in which case it might be smalller once.</param>
+            <returns>A list of DTMF keys, one for each channel. Hence its length will match the value of `Detector.Channels`.</returns>
+        </member>
+        <member name="T:DtmfDetection.DtmfChange">
+            <summary>Represents the start or a stop of a DTMF tone in audio data.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfChange.Key">
+            <summary>The key of the DTMF tone that changed.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfChange.Position">
+            <summary>The position inside the audio data where the change was detected.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfChange.Channel">
+            <summary>The audio channel where the change was detected.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfChange.IsStart">
+            <summary>Indicates whether a DMTF tone started or stopped at the current position.</summary>
+        </member>
+        <member name="P:DtmfDetection.DtmfChange.IsStop">
+            <summary>Indicates whether a DMTF tone started or stopped at the current position.</summary>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.#ctor(DtmfDetection.PhoneKey,System.TimeSpan,System.Int32,System.Boolean)">
+            <summary>Creates a new `DtmfChange` with the given identification and location.</summary>
+            <param name="key">The key of the DTMF tone.</param>
+            <param name="position">The position of the DTMF tone inside the audio data.</param>
+            <param name="channel">The audio channel of the DTMF tone.</param>
+            <param name="isStart">Indicates whether a DMTF tone started or stopped at the current position.</param>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.Start(DtmfDetection.PhoneKey,System.TimeSpan,System.Int32)">
+            <summary>Creates a new `DtmfChange` that marks the start of a DTMF tone at the specified location.</summary>
+            <param name="key">The key of the DTMF tone.</param>
+            <param name="position">The position of the DTMF tone inside the audio data.</param>
+            <param name="channel">The audio channel of the DTMF tone.</param>
+            <returns>A new `DtmfChange` marking the start of a DTMF tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.Stop(DtmfDetection.PhoneKey,System.TimeSpan,System.Int32)">
+            <summary>Creates a new `DtmfChange` that marks the end of a DTMF tone at the specified location.</summary>
+            <param name="key">The key of the DTMF tone.</param>
+            <param name="position">The position of the DTMF tone inside the audio data.</param>
+            <param name="channel">The audio channel of the DTMF tone.</param>
+            <returns>A new `DtmfChange` marking the end of a DTMF tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.ToString">
+            <summary>Prints the identification and location of this `DtmfChange` to a `string` and returns it.</summary>
+            <returns>A `string` identifiying and localizing this `DtmfChange`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.Equals(DtmfDetection.DtmfChange)">
+            <summary>Indicates whether the current `DtmfChange` is equal to another `DtmfChange`.</summary>
+            <param name="other">A `DtmfChange` to compare with this `DtmfChange`.</param>
+            <returns>Returns `true` if the current `DtmfChange` is equal to `other`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.Equals(System.Object)">
+            <summary>Indicates whether this `DtmfChange` and a specified object are equal.</summary>
+            <param name="obj">The object to compare with the current `DtmfChange`.</param>
+            <returns>Returns `true` if `obj` this `DtmfChange` are the same type and represent the same value; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.op_Equality(DtmfDetection.DtmfChange,DtmfDetection.DtmfChange)">
+            <summary>Indicates whether the left-hand side `DtmfChange` is equal to the right-hand side `DtmfChange`.</summary>
+            <param name="left">The left-hand side `DtmfChange` of the comparison.</param>
+            <param name="right">The right-hand side `DtmfChange` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `DtmfChange` is equal to the right-hand side `DtmfChange`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.op_Inequality(DtmfDetection.DtmfChange,DtmfDetection.DtmfChange)">
+            <summary>Indicates whether the left-hand side `DtmfChange` is not equal to the right-hand side `DtmfChange`.</summary>
+            <param name="left">The left-hand side `DtmfChange` of the comparison.</param>
+            <param name="right">The right-hand side `DtmfChange` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `DtmfChange` is not equal to the right-hand side `DtmfChange`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfChange.GetHashCode">
+            <summary>Returns the hash code for this `DtmfChange`.</summary>
+            <returns>A 32-bit signed integer that is the hash code for this `DtmfChange`.</returns>
+        </member>
+        <member name="T:DtmfDetection.DtmfGenerator">
+            <summary>Provides helpers to generate DTMF tones.</summary>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Generate(DtmfDetection.PhoneKey,System.Int32)">
+            <summary>Generates single-channel PCM data playing the DTMF tone `key` infinitely.</summary>
+            <param name="key">The DTMF tone to generate.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>An infinite sequence of PCM data playing the specified DMTF tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Generate(System.Int32,System.Int32,System.Int32)">
+            <summary>Generates single-channel PCM data playing the dual tone comprised of the two frequencies `highFreq` and `lowFreq` infinitely.</summary>
+            <param name="highFreq">The high frequency part of the dual tone.</param>
+            <param name="lowFreq">The low frequency part of the dual tone.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>An infinite sequence of PCM data playing the specified dual tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Generate(System.ValueTuple{System.Int32,System.Int32},System.Int32)">
+            <summary>Generates single-channel PCM data playing the dual tone comprised of the two frequencies `highFreq` and `lowFreq` infinitely.</summary>
+            <param name="dual">A tuple holding the high and low frequency.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>An infinite sequence of PCM data playing the specified dual tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Mark(DtmfDetection.PhoneKey,System.Int32,System.Int32)">
+            <summary>Generates single-channel PCM data playing the DTMF tone `key` for the specified length `ms`.</summary>
+            <param name="key">The DTMF tone to generate.</param>
+            <param name="ms">The length of the DTMF tone in milliseconds.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>A sequence of PCM data playing the specified DTMF tone.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Space(System.Int32,System.Int32)">
+            <summary>Generates single-channel PCM data playing silence for the specified length `ms`.</summary>
+            <param name="ms">The length of the silence in milliseconds.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>A sequence of silent PCM data.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Stereo(System.Collections.Generic.IEnumerable{System.Single},System.Collections.Generic.IEnumerable{System.Single})">
+            <summary>Takes two sequences of single-channel PCM data and interleaves them to form a single sequence of dual-channel PCM data.</summary>
+            <param name="left">The PCM data for the left channel.</param>
+            <param name="right">The PCM data for the right channel.</param>
+            <returns>A sequence of dual-channel PCM data.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Sine(System.Int32,System.Int32,System.Single)">
+            <summary>Generates a sinusoidal PCM signal of infinite length for the specified frequency.</summary>
+            <param name="freq">The frequency of the signal.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <param name="amplitude">Optional amplitude of the signal. Defaults to `1`.</param>
+            <returns>An infinite sine signal.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Constant(System.Single)">
+            <summary>Generates a constant PCM signal of infinite length.</summary>
+            <param name="amplitude">The amplitude of the signal.</param>
+            <returns>An infinite constant signal.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Noise(System.Single)">
+            <summary>Generates an infinite PCM signal of pseudo-random white noise.</summary>
+            <param name="amplitude">The amplitude of the noise.</param>
+            <returns>An infinite noise signal.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.AsSamples(System.Collections.Generic.IEnumerable{System.Single},System.Int32,System.Int32)">
+            <summary>Creates an `AudioData` instance from a sequence of PCM samples.</summary>
+            <param name="source">The input PCM data.</param>
+            <param name="channels">Optional number of channels in the PCM data. Defaults to `1`.</param>
+            <param name="sampleRate">Optional sample rate of the PCM data. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>A new `AudioData` instane that can be analyzed by the `Analyzer`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Add(System.Collections.Generic.IEnumerable{System.Single},System.Collections.Generic.IEnumerable{System.Single})">
+            <summary>Adds two sequences of PCM data together. Used to generate dual tones. The amplitude might exceed the range `[-1..1]` after adding.</summary>
+            <param name="xs">One of the two input signals to add.</param>
+            <param name="ys">One of the two input signals to add.</param>
+            <returns>The sum of both input signals.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Normalize(System.Collections.Generic.IEnumerable{System.Single},System.Single)">
+            <summary>Normlizes a signal with the given `maxAmplitude`.</summary>
+            <param name="source">The signal to normalize.</param>
+            <param name="maxAmplitude">The value to normalize by. Ideally it should equal `Math.Abs(source.Max())`.</param>
+            <returns>The input signal with each sample value divided by `maxAmplitude`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.Concat(System.Collections.Generic.IEnumerable{System.Single}[])">
+            <summary>Concatenates multiple finite sequences of PCM data. Typically used with `Mark()` and `Space()`.</summary>
+            <param name="xss">The sequences to concatenate.</param>
+            <returns>The single sequence that is the concatenation of the given sequences.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfGenerator.NumSamples(System.Int32,System.Int32,System.Int32)">
+            <summary>Converts a duration in milliseconds into the number of samples required to represent a signal of that duration as PCM audio data.</summary>
+            <param name="milliSeconds">The duration of the signal.</param>
+            <param name="channels">Optional number of channels in the signal. Defaults to `1`.</param>
+            <param name="sampleRate">Optional sample rate of the signal. Defaults to `Config.DefaultSampleRate`.</param>
+            <returns>The number of samples needed for the specified length, channels, and sample rate.</returns>
+        </member>
+        <member name="T:DtmfDetection.DtmfTone">
+            <summary>Represents a DTMF tone in audio data.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfTone.Key">
+            <summary>The key of the DTMF tone.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfTone.Position">
+            <summary>The position inside the audio data where the DTMF tone was detected.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfTone.Duration">
+            <summary>The length of the DTMF tone inside the audio data.</summary>
+        </member>
+        <member name="F:DtmfDetection.DtmfTone.Channel">
+            <summary>The audio channel where the DTMF tone was detected.</summary>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.#ctor(DtmfDetection.PhoneKey,System.TimeSpan,System.TimeSpan,System.Int32)">
+            <summary>Creates a new `DtmfTone` with the given identification and location.</summary>
+            <param name="key">The key of the DTMF tone.</param>
+            <param name="position">The position of the DTMF tone inside the audio data.</param>
+            <param name="duration">The length of the DTMF tone.</param>
+            <param name="channel">The audio channel of the DTMF tone.</param>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.From(DtmfDetection.DtmfChange@,DtmfDetection.DtmfChange@)">
+            <summary>Creates a new `DtmfTone` from two `DtmfChange`s representing the start and end of the same tone.</summary>
+            <param name="start">The `DtmfChange` that marks the start of the DTMF tone.</param>
+            <param name="stop">The `DtmfChange` that marks the end of the DTMF tone.</param>
+            <returns>A new `DtmfTone` that represents both `DtmfChange`s as one data structure.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.ToString">
+            <summary>Prints the identification and location of this `DtmfTone` to a `string` and returns it.</summary>
+            <returns>A `string` identifiying and localizing this `DtmfTone`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.Equals(DtmfDetection.DtmfTone)">
+            <summary>Indicates whether the current `DtmfTone` is equal to another `DtmfTone`.</summary>
+            <param name="other">A `DtmfTone` to compare with this `DtmfTone`.</param>
+            <returns>Returns `true` if the current `DtmfTone` is equal to `other`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.Equals(System.Object)">
+            <summary>Indicates whether this `DtmfTone` and a specified object are equal.</summary>
+            <param name="obj">The object to compare with the current `DtmfTone`.</param>
+            <returns>Returns `true` if `obj` this `DtmfTone` are the same type and represent the same value; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.op_Equality(DtmfDetection.DtmfTone,DtmfDetection.DtmfTone)">
+            <summary>Indicates whether the left-hand side `DtmfTone` is equal to the right-hand side `DtmfTone`.</summary>
+            <param name="left">The left-hand side `DtmfTone` of the comparison.</param>
+            <param name="right">The right-hand side `DtmfTone` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `DtmfTone` is equal to the right-hand side `DtmfTone`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.op_Inequality(DtmfDetection.DtmfTone,DtmfDetection.DtmfTone)">
+            <summary>Indicates whether the left-hand side `DtmfTone` is not equal to the right-hand side `DtmfTone`.</summary>
+            <param name="left">The left-hand side `DtmfTone` of the comparison.</param>
+            <param name="right">The right-hand side `DtmfTone` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `DtmfTone` is not equal to the right-hand side `DtmfTone`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.DtmfTone.GetHashCode">
+            <summary>Returns the hash code for this `DtmfTone`.</summary>
+            <returns>A 32-bit signed integer that is the hash code for this `DtmfTone`.</returns>
+        </member>
+        <member name="T:DtmfDetection.FloatArrayExt">
+            <summary>Provides an extension method to detect DTMF tones in PCM audio data.</summary>
+        </member>
+        <member name="M:DtmfDetection.FloatArrayExt.DtmfChanges(System.Single[],System.Int32,System.Int32,System.Nullable{DtmfDetection.Config})">
+            <summary>Detects DTMF tones in an array of `float`s.</summary>
+            <param name="samples">The input audio data as an array of `float` values.</param>
+            <param name="channels">The number of audio channels in the input data.</param>
+            <param name="sampleRate">The sample rate (in Hz) at which the input data was sampled.</param>
+            <param name="config">Optional detector configuration. Defaults to `Config.Default`.</param>
+            <returns>All detected DTMF tones as a list of `DtmfChange`s.</returns>
+        </member>
+        <member name="T:DtmfDetection.Goertzel">
+            <summary>The actual implementation of the Goertzel algorithm (https://en.wikipedia.org/wiki/Goertzel_algorithm) that estimates the strength of a frequency in a signal. It works similar to a Fourier transform except that it doesn't analyze the whole spectrum, but only a single frequency.</summary>
+        </member>
+        <member name="F:DtmfDetection.Goertzel.C">
+            <summary>Stores a pre-computed coefficient calculated from the parameters of `Init()`.</summary>
+        </member>
+        <member name="F:DtmfDetection.Goertzel.S1">
+            <summary>Stores the state of the `Goertzel`. Used to determine the strength of the target frequency in the signal.</summary>
+        </member>
+        <member name="F:DtmfDetection.Goertzel.S2">
+            <summary>Stores the state of the `Goertzel`. Used to determine the strength of the target frequency in the signal.</summary>
+        </member>
+        <member name="F:DtmfDetection.Goertzel.E">
+            <summary>Accumulates the total signal energy of the signal. Used for normalization.</summary>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>Used to create a new `Goertzel` from the values of a previous one.</summary>
+            <param name="c">The pre-computed coefficient.</param>
+            <param name="s1">The `Goertzel` state.</param>
+            <param name="s2">The `Goertzel` state.</param>
+            <param name="e">The total signal energy accumulated so far.</param>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.Init(System.Int32,System.Int32,System.Int32)">
+            <summary>Initializes a `Goertzel` for a given target frequency.</summary>
+            <param name="targetFreq">The target frequency to estimate the strength for in a signal.</param>
+            <param name="sampleRate">The sample rate of the signal. A rate of `8000` (Hz) is recommended.</param>
+            <param name="numSamples">The number of samples that will be added to the `Goertzel` before `Response` or `NormResponse` are queried. It is recommended to use a value of `205` as this minimizes errors.</param>
+            <returns>A new `Goertzel` with a pre-computed coefficient.</returns>
+        </member>
+        <member name="P:DtmfDetection.Goertzel.Response">
+            <summary>Calculates and returns the estimated strength of the frequency in the samples given so far.</summary>
+        </member>
+        <member name="P:DtmfDetection.Goertzel.NormResponse">
+            <summary>Calculates `Response`, but normalized with the total signal energy, which achieves loudness invariance.</summary>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.AddSample(System.Single)">
+            <summary>Adds a new sample to this `Goertzel` and returns a new one created from the previous `Goertzel` values and the sample.</summary>
+            <param name="sample">The sample value to add.</param>
+            <returns>A new `Goertzel` that has the sample value added to this one.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.Reset">
+            <summary>Creates a new `Goertzel` from this one's coefficient `C`, but resets the state (`S1`, `S2`) and the total signal energy (`E`) to `0`. Useful to save the computation of `C` when the parameters of `Init()` were to stay the same.</summary>
+            <returns>A new `Goertzel` with this one's value of `C`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.ToString">
+            <summary>Prints the value of `NormResponse` to a `string` and returns it.</summary>
+            <returns>The `NormResponse` of this `Goertzel` as a `string`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.Equals(DtmfDetection.Goertzel)">
+            <summary>Indicates whether the current `Goertzel` is equal to another `Goertzel`.</summary>
+            <param name="other">A `Goertzel` to compare with this `Goertzel`.</param>
+            <returns>Returns `true` if the current `Goertzel` is equal to `other`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.Equals(System.Object)">
+            <summary>Indicates whether this `Goertzel` and a specified object are equal.</summary>
+            <param name="obj">The object to compare with the current `Goertzel`.</param>
+            <returns>Returns `true` if `obj` this `Goertzel` are the same type and represent the same value; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.op_Equality(DtmfDetection.Goertzel,DtmfDetection.Goertzel)">
+            <summary>Indicates whether the left-hand side `Goertzel` is equal to the right-hand side `Goertzel`.</summary>
+            <param name="left">The left-hand side `Goertzel` of the comparison.</param>
+            <param name="right">The right-hand side `Goertzel` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `Goertzel` is equal to the right-hand side `Goertzel`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.op_Inequality(DtmfDetection.Goertzel,DtmfDetection.Goertzel)">
+            <summary>Indicates whether the left-hand side `Goertzel` is not equal to the right-hand side `Goertzel`.</summary>
+            <param name="left">The left-hand side `Goertzel` of the comparison.</param>
+            <param name="right">The right-hand side `Goertzel` of the comparison.</param>
+            <returns>Returns `true` if the left-hand side `Goertzel` is not equal to the right-hand side `Goertzel`; otherwise, `false`.</returns>
+        </member>
+        <member name="M:DtmfDetection.Goertzel.GetHashCode">
+            <summary>Returns the hash code for this `Goertzel`.</summary>
+            <returns>A 32-bit signed integer that is the hash code for this `Goertzel`.</returns>
+        </member>
+        <member name="T:DtmfDetection.Interfaces.IAnalyzer">
+            <summary>Interface to decouple the `BackgroundAnalyzer` from the `Analyzer` it is using by default. Use this if you want to inject your own analyzer into the `BackgroundAnalyzer`. Feel free to start by copying the original `Analyzer` and adjust it to your needs.</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.IAnalyzer.MoreSamplesAvailable">
+            <summary>Indicates whether there is more data to analyze. Should always be `true` initially and once it turned `false`, it should never turn back to `true` again.</summary>
+        </member>
+        <member name="M:DtmfDetection.Interfaces.IAnalyzer.AnalyzeNextBlock">
+            <summary>Analyzes the next block of samples. The size of the analyzed block should match `Config.SampleBlockSize` multiplied by the number of channels in the sample data. This might throw when called while `MoreSamplesAvailable` is `false`.</summary>
+            <returns>A list of detected DTMF changes.</returns>
+        </member>
+        <member name="T:DtmfDetection.Interfaces.IDetector">
+            <summary>Interface to decouple the `Analyzer` from the `Detector` it is using by default. Use this if you want to inject your own detector into the `Analyzer`. Feel free to start by copying the original `Detector` and adjust it to your needs.</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.IDetector.Channels">
+            <summary>The number of channels this detector has been created for. Used by the `Analyzer` to validate that this detector supports the number of channels present int the source data (`ISamples.Channels`).</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.IDetector.Config">
+            <summary>The `Config` this detector has been created with.</summary>
+        </member>
+        <member name="M:DtmfDetection.Interfaces.IDetector.Detect(System.ReadOnlySpan{System.Single}@)">
+            <summary>Runs the Goertzel algorithm on all samples in `sampleBlock` and returns the DTMF key detected in each channel. `PhoneKey.None` is used in case no DTMF key has been detected in a channel.</summary>
+            <param name="sampleBlock">The block of samples to analyze. Its length should always match `Config.SampleBlockSize` except when the end of the input has been reached, in which case it might be smalller once.</param>
+            <returns>A list of DTMF keys, one for each channel. Hence its length must match the value of `Channels`.</returns>
+        </member>
+        <member name="T:DtmfDetection.Interfaces.ISamples">
+            <summary>Interface used by the `Analyzer` to access a variety of audio sources in a uniform way. Implement this interface if your data source does not fit any of the pre-built implementations: `AudioData` for float arrays of PCM data, `AudioFile` for audio files (mp3, wav, aiff and Windows Media Foundation formats), or `AudioStream` for infinite audio streams.</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.ISamples.Channels">
+            <summary>The number of audio channels. This should match the value of `Config.Channels` the `Analyzer` is using.</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.ISamples.SampleRate">
+            <summary>The rate at which the values have been sampled in Hz. This should match the value of `Config.SampleRate` the `Analyzer` is using.</summary>
+        </member>
+        <member name="P:DtmfDetection.Interfaces.ISamples.Position">
+            <summary>The position of the "read cursor" in the sample stream. This should increase with every call to `Read()` that returns a value greater than 0.</summary>
+        </member>
+        <member name="M:DtmfDetection.Interfaces.ISamples.Read(System.Single[],System.Int32)">
+            <summary>Reads `count` samples from the input and writes them into `buffer`. This method should either block until `count` samples have been succesfully read, or return a number less than `count` to indicate that the end of the stream has been reached. Once the end of stream has been reached, subsequent calls to `Read()` are allowed to fail with exceptions.</summary>
+            <param name="buffer">The output array to write the read samples to.</param>
+            <param name="count">The number of samples to read.</param>
+            <returns>The number of samples that have been read. Will always equal `count` except when the end of the input has been reached, in which case `Read()` returns a number less than `count`.</returns>
+        </member>
+        <member name="T:DtmfDetection.PhoneKey">
+            <summary>An enumeration of all possible DTMF keys.</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.None">
+            <summary>Used to represent the absence of any DTMF tones.</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Zero">
+            <summary>Key '0'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.One">
+            <summary>Key '1'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Two">
+            <summary>Key '2'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Three">
+            <summary>Key '3'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Four">
+            <summary>Key '4'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Five">
+            <summary>Key '5'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Six">
+            <summary>Key '6'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Seven">
+            <summary>Key '7'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Eight">
+            <summary>Key '8'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Nine">
+            <summary>Key '9'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Star">
+            <summary>Key '*'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.Hash">
+            <summary>Key '#'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.A">
+            <summary>Key 'A'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.B">
+            <summary>Key 'B'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.C">
+            <summary>Key 'C'</summary>
+        </member>
+        <member name="F:DtmfDetection.PhoneKey.D">
+            <summary>Key 'D'</summary>
+        </member>
+        <member name="T:DtmfDetection.ToDtmfTonesExt">
+            <summary>Provides helpers to generate a sequence of `DtmfTone`s from a list of `DtmfChange`s.</summary>
+        </member>
+        <member name="M:DtmfDetection.ToDtmfTonesExt.ToDtmfTones(System.Collections.Generic.IList{DtmfDetection.DtmfChange})">
+            <summary>Converts a list of `DtmfChange`s to a sequence of `DtmfTone`s by finding the matching stop of a DTMF tones to each start of a DTMF tone and merging both into a single `DtmfTone` struct.</summary>
+            <param name="dtmfs">A list of `DtmfChange`s ordered by `DtmfChange.Position` in ascending order. The list must be consistent (i.e. there must be a "DTMF stop" after every "DTMF start" somehwere in the list) otherwise an `InvalidOperationException` will be thrown.</param>
+            <returns>A sequence of `DtmfTone`s orderd by `DtmfTone.Position` in ascending order.</returns>
+        </member>
+        <member name="M:DtmfDetection.ToDtmfTonesExt.FindMatchingStop(System.Collections.Generic.IList{DtmfDetection.DtmfChange},System.Int32,DtmfDetection.DtmfChange@)">
+            <summary>Finds the stop of a DTMF tone matching the given start of a DTMF tone in a list of `DtmfChange`s. A `DtmfChange x` matches `start` when: `x.IsStop == true`, `x.Channel == start.Channel`,`x.Key == start.Key`, and `x.Position >= start.Position`.</summary>
+            <param name="dtmfs">The list of `DtmfChange`s to search in. Should be ordered by `DtmfChange.Position` in ascending order.</param>
+            <param name="offset">An offset into the list to start searching from. Useful for optimizing performance.</param>
+            <param name="start">The DTMF start to find a matching stop for.</param>
+            <returns>The found stop of the DTMF tone. Throws an `InvalidOperationException` if no matching stop could be found.</returns>
+        </member>
+        <member name="T:DtmfDetection.Utils">
+            <summary>Provides helpers to convert between `PhoneKey`s and their corresponding frequency encodings.</summary>
+        </member>
+        <member name="M:DtmfDetection.Utils.PhoneKeys">
+            <summary>Enumerates all `PhoneKey`s except `PhoneKey.None`.</summary>
+            <returns>An enumeration of all valid `PhoneKey`s.</returns>
+        </member>
+        <member name="M:DtmfDetection.Utils.ToPhoneKey(System.ValueTuple{System.Int32,System.Int32}@)">
+            <summary>Converts a frequency tuple to a `PhoneKey`.</summary>
+            <param name="dtmfTone">The high and low frequencies as a `ValueTuple`.</param>
+            <returns>The matching `PhoneKey` or `PhoneKey.None` in case the given frequencies don't encode a DTMF key.</returns>
+        </member>
+        <member name="M:DtmfDetection.Utils.ToDtmfTone(DtmfDetection.PhoneKey)">
+            <summary>Converts a `PhoneKey` to the two frequencies it is encoded with in audio data.</summary>
+            <param name="key">The key to convert.</param>
+            <returns>A `ValueTuple` holding the key's high frequency in the first position and its low frequency in the second position.</returns>
+        </member>
+        <member name="M:DtmfDetection.Utils.ToSymbol(DtmfDetection.PhoneKey)">
+            <summary>Converts a `PhoneKey` to its UTF-8 symbol.</summary>
+            <param name="key">The key to convert.</param>
+            <returns>A `char` representing the `PhoneKey`.</returns>
+        </member>
+    </members>
+</doc>
